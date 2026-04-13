@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query
 import requests
 import pandas as pd
 from io import StringIO
+import os
 
 app = FastAPI(title="API Sindicatos CFCRL")
 
@@ -43,3 +44,8 @@ def modificaciones():
 def tramites():
     df = obtener_datos()
     return {"tramites_disponibles": df["tramite"].unique().tolist()}
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)
